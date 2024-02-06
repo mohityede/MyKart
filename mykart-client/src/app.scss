@@ -1,0 +1,51 @@
+@import "./styles/mixins.scss";
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  user-select: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+$color1: white;
+$color2: #1B4242;
+$color3: #5C8374;
+
+.red {
+  color: #D24545;
+}
+
+.purple {
+  color: #6C22A6;
+}
+
+.green {
+  color: #74E291;
+}
+
+.container {
+  max-width: 1367px;
+  width: 100%;
+  margin: auto;
+  overflow: auto;
+
+  >h1 {
+    @include heading;
+    margin: 1rem 0;
+    text-align: left;
+  }
+}
