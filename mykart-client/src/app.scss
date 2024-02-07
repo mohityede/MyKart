@@ -49,3 +49,22 @@ $color3: #5C8374;
     text-align: left;
   }
 }
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid black;
+
+  .logo-img {
+    width: 100px;
+    padding: 10px;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+  }
+}
