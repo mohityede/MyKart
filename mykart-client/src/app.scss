@@ -51,41 +51,50 @@ $color3: #5C8374;
 }
 
 .header {
-  @include flex(row, space-between, center, 1.2rem);
-  // display: flex;
-  // flex-direction: row;
-  // justify-content: space-between;
-  // align-items: center;
-  border-bottom: 2px solid black;
-  font-size: 1.5rem;
+  @include flex(row, space-between, stretch, 1.2rem);
+  padding: 1rem;
 
   .logo-img {
-    width: 100px;
-    padding: 10px;
+    width: 70px;
   }
 
   nav {
-    display: flex;
-    justify-content: space-around;
-    width: 40%;
-  }
+    @include flex(row, space-around, center, 1.2rem);
+    width: 20%;
 
-  a {
-    &:hover {
-      font-size: 2rem;
+    a {
+      color: $color2;
+      letter-spacing: 2px;
+      font-size: 1.2rem;
+
+      &:hover {
+        color: $color3;
+      }
     }
-  }
 
-  button {
-    font-size: 2rem;
-    background-color: aliceblue;
-  }
+    button {
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      background-color: transparent;
 
-  dialog {
-    color: $color2;
+      &:hover {
+        color: $color3;
+      }
+    }
 
-    &:hover {
-      color: $color3;
+    dialog {
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 10px;
+      width: 100px;
+      position: absolute;
+      left: calc(100% - 100px);
+      top: 8%;
+
+      >div {
+        @include flex(column, flex-start, center, 0.25rem);
+      }
     }
   }
 }
