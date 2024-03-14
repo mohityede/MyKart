@@ -1,5 +1,3 @@
-@import "./styles/mixins.scss";
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -14,6 +12,7 @@
 
 body {
   user-select: none;
+  overflow-y: scroll;
 }
 
 a {
@@ -22,19 +21,22 @@ a {
 }
 
 $color1: white;
-$color2: #1B4242;
-$color3: #5C8374;
+$color2: #1b4242;
+$color3: #5c8374;
+
+@import "./styles/mixins.scss";
+@import "./styles/home.scss";
 
 .red {
-  color: #D24545;
+  color: #d24545;
 }
 
 .purple {
-  color: #6C22A6;
+  color: #6c22a6;
 }
 
 .green {
-  color: #74E291;
+  color: #74e291;
 }
 
 .container {
@@ -43,7 +45,7 @@ $color3: #5C8374;
   margin: auto;
   overflow: auto;
 
-  >h1 {
+  > h1 {
     @include heading;
     margin: 1rem 0;
     text-align: left;
@@ -92,7 +94,7 @@ $color3: #5C8374;
       left: calc(100% - 100px);
       top: 8%;
 
-      >div {
+      > div {
         @include flex(column, flex-start, center, 0.25rem);
       }
     }
