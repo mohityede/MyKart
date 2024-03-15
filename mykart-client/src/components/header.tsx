@@ -3,7 +3,7 @@ import logo from "../assets/MyKart-logo.png";
 import { CgProfile } from "react-icons/cg";
 import { useState } from "react";
 
-const user = { _id: 123, role: "admin" };
+const user = { _id: 23, role: "admin" };
 
 function Header() {
   const [isDialog, setisDialog] = useState<boolean>(false);
@@ -41,20 +41,20 @@ function Header() {
                     to={"/admin/dashboard"}
                     onClick={() => setisDialog(false)}
                   >
-                    Admin
+                    ADMIN
                   </Link>
                 )}
                 {user?.role === "user" && (
                   <Link to={"/orders"} onClick={() => setisDialog(false)}>
-                    Orders
+                    ORDERS
                   </Link>
                 )}
-                <button onClick={logOutHandler}>signOut</button>
+                <button onClick={logOutHandler}>LOGOUT</button>
               </div>
             </dialog>
           </>
         ) : (
-          <Link to={"/login"}>login</Link>
+          <Link to={"/login"}>LOGIN</Link>
         )}
       </nav>
     </div>

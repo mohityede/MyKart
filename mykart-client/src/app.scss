@@ -28,6 +28,7 @@ $color3: #5c8374;
 @import "./styles/home.scss";
 @import "./styles/cart.scss";
 @import "./styles/shipping.scss";
+@import "./styles/login.scss";
 
 .red {
   color: #d24545;
@@ -91,9 +92,9 @@ $color3: #5c8374;
       border: 1px solid black;
       border-radius: 5px;
       padding: 10px;
-      width: 100px;
+      width: 150px;
       position: absolute;
-      left: calc(100% - 100px);
+      left: calc(100% - 150px);
       top: 8%;
 
       > div {
