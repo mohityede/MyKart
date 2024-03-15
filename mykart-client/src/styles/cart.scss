@@ -60,7 +60,7 @@
 
 .cartitem {
   @include flex(row, flex-start, center, 3rem);
-  padding: 2rem;
+  padding: 1rem;
   > img {
     @include square(10rem);
     object-fit: contain;

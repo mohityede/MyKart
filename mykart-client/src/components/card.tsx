@@ -7,7 +7,6 @@ type ProductProps = {
   handler: () => void;
 };
 
-const server = "dajfjoj";
 function Card({ productId, name, photo, price, stock, handler }: ProductProps) {
   return (
     <div className="productcard">
