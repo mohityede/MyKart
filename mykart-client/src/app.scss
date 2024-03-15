@@ -12,7 +12,7 @@
 
 body {
   user-select: none;
-  overflow-y: scroll;
+  // overflow-y: scroll;
 }
 
 a {
@@ -27,6 +27,7 @@ $color3: #5c8374;
 @import "./styles/mixins.scss";
 @import "./styles/home.scss";
 @import "./styles/cart.scss";
+@import "./styles/shipping.scss";
 
 .red {
   color: #d24545;

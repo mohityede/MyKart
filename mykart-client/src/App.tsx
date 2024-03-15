@@ -1,12 +1,13 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { lazy, Suspense } from "react"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
-import Loader from "./components/loader"
-import Header from "./components/header"
+import Loader from "./components/loader";
+import Header from "./components/header";
 
-const Home = lazy(() => import("./pages/home"))
-const Cart = lazy(() => import("./pages/cart"))
-const Search = lazy(() => import("./pages/search"))
+const Home = lazy(() => import("./pages/home"));
+const Cart = lazy(() => import("./pages/cart"));
+const Search = lazy(() => import("./pages/search"));
+const Shipping = lazy(() => import("./pages/shipping"));
 
 function App() {
   return (
@@ -16,11 +17,15 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
+          {/* Logged in user routes */}
           <Route path="/cart" element={<Cart />} />
+          <Route>
+            <Route path="/shipping" element={<Shipping />} />
+          </Route>
         </Routes>
       </Suspense>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
