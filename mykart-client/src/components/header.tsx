@@ -3,7 +3,7 @@ import logo from "../assets/MyKart-logo.png";
 import { CgProfile } from "react-icons/cg";
 import { useState } from "react";
 
-const user = { _id: 23, role: "admin" };
+const user = { _id: 23, role: "user" };
 
 function Header() {
   const [isDialog, setisDialog] = useState<boolean>(false);
