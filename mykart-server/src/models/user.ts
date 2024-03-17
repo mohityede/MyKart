@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import validator from "validator";
 
 interface IUser extends Document {
-  _id: string;
   name: string;
   email: string;
   photo: string;
@@ -17,10 +16,6 @@ interface IUser extends Document {
 
 const userSchema = new mongoose.Schema(
   {
-    _id: {
-      type: String,
-      required: [true, "Please enter ID"],
-    },
     name: {
       type: String,
       required: [true, "Please enter Name"],
@@ -57,8 +52,8 @@ const userSchema = new mongoose.Schema(
 
 userSchema.virtual("age").get(function () {
   const today = new Date();
-  const dob = this.dob;
-  let age = today.getFullYear() - dob.getFullYear();
+  const dob: Date = this.dob;
+  let age: number = today.getFullYear() - dob.getFullYear();
   if (
     today.getMonth() < dob.getMonth() ||
     (today.getMonth() == dob.getMonth() && today.getDate() < dob.getDate())
