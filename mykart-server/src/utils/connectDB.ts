@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const connectDB = () => {
   const connectionString: string = process.env
-    .MONGODB_CONNECTION_STRING as string;
+    .LOCAL_DB_CONNECTOIN_STRING as string;
   //   console.log("inside connectdb", connectionString, typeof process.env.MONGODB_CONNECTION_STRING);
   mongoose
     .connect(connectionString, {

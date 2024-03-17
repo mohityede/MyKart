@@ -3,29 +3,13 @@ import { User } from "../models/user.js";
 import { NewUserRequestBody } from "../types/user.js";
 import ErrorHandler from "../utils/errorHandler.js";
 
-export const createUser = async (
-  req: Request<{}, {}, NewUserRequestBody>,
+export const getAllUsers = async (
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    const { name, email, photo, gender, role, dob } = req.body;
-    const user = await User.create({
-      name,
-      email,
-      photo,
-      gender,
-      role,
-      dob: new Date(dob),
-    });
-    return res
-      .status(201)
-      .json({ success: true, massage: `Welcome ${user.name}`, data: user });
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ success: false, massage: `SERVER ERROR: ${error}` });
-  }
+  const users = await User.find();
+  return res.status(200).json({ success: true, data: users });
 };
 
 export const getUser = async (
@@ -33,10 +17,54 @@ export const getUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    // return res.status(200).json({ success: true, massage: `Hello User` });
-    throw new ErrorHandler(402, "pyment wala err");
-  } catch (error) {
-    return next(error);
-  }
+  const { id } = req.params;
+  const user = await User.findById(id);
+  if (!user) return next(new ErrorHandler(400, "invalid id!"));
+
+  return res.status(200).json({ success: true, data: user });
+};
+
+export const createUser = async (
+  req: Request<{}, {}, NewUserRequestBody>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { _id, name, email, photo, gender, role, dob } = req.body;
+  let user = await User.findById(_id);
+  if (user)
+    return res
+      .status(200)
+      .json({ success: true, massage: `Welcome ${user.name}` });
+
+  if (!name || !email || !photo || !gender || !role || !dob)
+    return next(new ErrorHandler(400, "Please fill all fuild!"));
+
+  user = await User.create({
+    _id,
+    name,
+    email,
+    photo,
+    gender,
+    role,
+    dob: new Date(dob),
+  });
+  return res
+    .status(201)
+    .json({ success: true, massage: `Welcome ${user.name}`, data: user });
+};
+
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  if (!user) return next(new ErrorHandler(400, "invalid id!"));
+
+  await User.findByIdAndDelete(id);
+
+  return res
+    .status(200)
+    .json({ success: true, data: `${user.name} deleted successfully` });
 };
