@@ -6,11 +6,12 @@ import {
   getUser,
 } from "../controllers/user.js";
 import asyncWrapper from "../utils/asyncWrapper.js";
+import isAdmin from "../middlewares/checkAdmin.js";
 
 const router = Router();
 
 // get all user - GET /api/v1/user/all
-router.get("/all", asyncWrapper(getAllUsers));
+router.get("/all", asyncWrapper(isAdmin), asyncWrapper(getAllUsers));
 // get user by id - GET /api/v1/user/:id
 router.get("/:id", asyncWrapper(getUser));
 
@@ -18,6 +19,6 @@ router.get("/:id", asyncWrapper(getUser));
 router.post("/new", asyncWrapper(createUser));
 
 // delete user - DELETE /api/v1/user/:id
-router.delete("/:id", asyncWrapper(deleteUser));
+router.delete("/:id", asyncWrapper(isAdmin), asyncWrapper(deleteUser));
 
 export default router;

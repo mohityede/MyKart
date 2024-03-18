@@ -29,14 +29,14 @@ export const createUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { _id, name, email, photo, gender, role, dob } = req.body;
+  const { _id, name, email, photo, gender, dob } = req.body;
   let user = await User.findById(_id);
   if (user)
     return res
       .status(200)
       .json({ success: true, massage: `Welcome ${user.name}` });
 
-  if (!name || !email || !photo || !gender || !role || !dob)
+  if (!name || !email || !photo || !gender || !dob)
     return next(new ErrorHandler(400, "Please fill all fuild!"));
 
   user = await User.create({
@@ -45,7 +45,6 @@ export const createUser = async (
     email,
     photo,
     gender,
-    role,
     dob: new Date(dob),
   });
   return res
