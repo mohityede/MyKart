@@ -14,3 +14,9 @@ export type FindQuery = {
   price?: { $lte: number };
   category?: string;
 };
+
+export type revalidateCacheProps = {
+  product?: boolean;
+  order?: boolean;
+  admin?: boolean;
+};

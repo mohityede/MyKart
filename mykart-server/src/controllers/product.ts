@@ -7,13 +7,21 @@ import {
 } from "../types/interfaces.js";
 import { rm } from "fs";
 import { FindQuery } from "../types/types.js";
+import { appCache } from "../app.js";
+import revalidatesCache from "../utils/revalidateCache.js";
 
 export const getAllProducts = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const products = await Product.find();
+  let products: Array<object>;
+  if (appCache.has("allProducts"))
+    products = appCache.get("allProducts") as Array<object>;
+  else {
+    products = await Product.find();
+    appCache.set("allProducts", products);
+  }
   return res.status(200).json({ success: true, data: products });
 };
 
@@ -23,6 +31,7 @@ export const getProduct = async (
   next: NextFunction
 ) => {
   const { id } = req.params;
+
   const product = await Product.findById(id);
   if (!product) return next(new ErrorHandler(400, "invalid product id!"));
 
@@ -34,8 +43,13 @@ export const getLatestProducts = async (
   res: Response,
   next: NextFunction
 ) => {
-  const products = await Product.find({}).sort({ createdAt: -1 }).limit(10);
-  if (!products) return next(new ErrorHandler(400, "invalid product id!"));
+  let products;
+  if (appCache.has("latestProducts")) products = appCache.get("latestProducts");
+  else {
+    products = await Product.find({}).sort({ createdAt: -1 }).limit(10);
+    if (!products) return next(new ErrorHandler(400, "invalid product id!"));
+    appCache.set("latestProducts", products);
+  }
 
   return res.status(200).json({ success: true, data: products });
 };
@@ -68,12 +82,10 @@ export const searchProduct = async (
 
   const totalPages = Math.ceil(filteredProductsOnly.length / pageLimit);
 
-  return res
-    .status(200)
-    .json({
-      success: true,
-      data: { products, filteredProductsOnly, totalPages },
-    });
+  return res.status(200).json({
+    success: true,
+    data: { products, filteredProductsOnly, totalPages },
+  });
 };
 
 export const createProduct = async (
@@ -99,6 +111,9 @@ export const createProduct = async (
     stock,
     category: category.toLocaleLowerCase(),
   });
+
+  revalidatesCache({ product: true });
+
   return res.status(201).json({
     success: true,
     message: `${product.name} created successfully!`,
@@ -116,6 +131,8 @@ export const deleteProduct = async (
   if (!product) return next(new ErrorHandler(400, "invalid product id!"));
 
   await Product.findByIdAndDelete(id);
+
+  revalidatesCache({ product: true });
 
   return res
     .status(200)
@@ -154,6 +171,8 @@ export const updateProduct = async (
       | "other";
 
   const updatedProduct = await product.save();
+
+  revalidatesCache({ product: true });
 
   return res.status(200).json({
     success: true,

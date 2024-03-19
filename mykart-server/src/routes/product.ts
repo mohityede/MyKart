@@ -39,7 +39,7 @@ router.put(
   asyncWrapper(updateProduct)
 );
 
-// delete user - DELETE /api/v1/product/:id
+// delete product - DELETE /api/v1/product/:id
 router.delete("/:id", asyncWrapper(isAdmin), asyncWrapper(deleteProduct));
 
 export default router;
