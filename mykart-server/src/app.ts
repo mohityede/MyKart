@@ -1,5 +1,6 @@
 import express from "express";
 import userRoutes from "./routes/user.js";
+import productRoutes from "./routes/product.js";
 import dotenv from "dotenv";
 import connectDB from "./utils/connectDB.js";
 import errorMiddleware from "./middlewares/error.js";
@@ -12,7 +13,8 @@ app.use(express.json());
 connectDB();
 
 app.use("/api/v1/user", userRoutes);
-
+app.use("/api/v1/product", productRoutes);
+app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 4000;
