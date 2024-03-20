@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/user.js";
-import { NewUserRequestBody } from "../types/types.js";
+import { NewUserRequestBody } from "../types/interfaces.js";
 import ErrorHandler from "../utils/errorHandler.js";
 
 export const getAllUsers = async (
