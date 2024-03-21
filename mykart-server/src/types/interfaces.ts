@@ -1,3 +1,5 @@
+import { OrderItemType, ShippingInfoType } from "./types.js";
+
 export interface NewUserRequestBody {
   _id: string;
   name: string;
@@ -21,4 +23,15 @@ export interface SearchProductRequestQuery {
   category?: string;
   sort?: string;
   page?: string;
+}
+
+export interface NewOrderRequestBody {
+  shippingInfo: ShippingInfoType;
+  user: String;
+  subTotal: Number;
+  shippingCharges: Number;
+  tax: Number;
+  discount: Number;
+  total: Number;
+  orderItems: OrderItemType[];
 }

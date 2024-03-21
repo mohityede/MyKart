@@ -18,7 +18,7 @@ export const appCache = new NodeCache();
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/product", productRoutes);
-app.use("api/v1/order", orderRoutes);
+app.use("/api/v1/order", orderRoutes);
 app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);
 

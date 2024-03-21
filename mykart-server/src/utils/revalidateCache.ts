@@ -7,6 +7,8 @@ const revalidatesCache = ({ product, order, admin }: revalidateCacheProps) => {
     appCache.del(productKeys);
   }
   if (order) {
+    const orderKeys: string[] = ["allOrders"];
+    appCache.del(orderKeys);
   }
   if (admin) {
   }

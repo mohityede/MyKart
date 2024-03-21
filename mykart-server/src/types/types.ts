@@ -20,3 +20,19 @@ export type revalidateCacheProps = {
   order?: boolean;
   admin?: boolean;
 };
+
+export type ShippingInfoType = {
+  address: String;
+  city: String;
+  state: String;
+  country: String;
+  pinCode: Number;
+};
+
+export type OrderItemType = {
+  name: String;
+  photo: String;
+  price: Number;
+  quantity: Number;
+  productId: String;
+};
