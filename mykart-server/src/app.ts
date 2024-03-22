@@ -2,6 +2,7 @@ import express from "express";
 import userRoutes from "./routes/user.js";
 import productRoutes from "./routes/product.js";
 import orderRoutes from "./routes/order.js";
+import paymentRoutes from "./routes/payment.js";
 import dotenv from "dotenv";
 import connectDB from "./utils/connectDB.js";
 import errorMiddleware from "./middlewares/error.js";
@@ -19,6 +20,7 @@ export const appCache = new NodeCache();
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/order", orderRoutes);
+app.use("/api/v1/payment", paymentRoutes);
 app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);
 

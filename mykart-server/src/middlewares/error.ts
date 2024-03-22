@@ -9,9 +9,13 @@ const errorMiddleware = (
 ) => {
   error.message = error.message || "Internal server issue";
   error.statusCode = error.statusCode || 500;
-  return res
-    .status(error.statusCode)
-    .json({ success: false, massage: `SERVER ERROR: ${error.message}` });
+
+  if (error.name == "CastError") error.message = "Invalid ID";
+  return res.status(error.statusCode).json({
+    success: false,
+    massage: `SERVER ERROR: ${error.message}`,
+    errorDetails: error,
+  });
 };
 
 export default errorMiddleware;
