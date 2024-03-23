@@ -14,3 +14,12 @@ export const reduceStock = async (orderItems: OrderItemType[]) => {
     await product.save();
   }
 };
+
+export const calculateGrowthPercentage = (
+  lastMonth: number,
+  thisMonth: number
+) => {
+  if (lastMonth == 0) return (thisMonth / 100).toFixed(0);
+  const percent = ((thisMonth - lastMonth) / lastMonth) * 100;
+  return Number(percent.toFixed(0));
+};
