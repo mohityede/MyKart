@@ -9,6 +9,7 @@ import connectDB from "./utils/connectDB.js";
 import errorMiddleware from "./middlewares/error.js";
 import NodeCache from "node-cache";
 import morgan from "morgan";
+import Stripe from "stripe";
 
 const app = express();
 
@@ -17,6 +18,7 @@ connectDB();
 app.use(express.json());
 app.use(morgan("dev"));
 export const appCache = new NodeCache();
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/product", productRoutes);
