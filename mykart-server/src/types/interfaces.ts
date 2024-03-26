@@ -35,3 +35,9 @@ export interface NewOrderRequestBody {
   total: Number;
   orderItems: OrderItemType[];
 }
+
+export interface MyDocument extends Document {
+  createdAt: Date;
+  discount?: number;
+  total?: number;
+}

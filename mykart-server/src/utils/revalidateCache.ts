@@ -11,6 +11,13 @@ const revalidatesCache = ({ product, order, admin }: revalidateCacheProps) => {
     appCache.del(orderKeys);
   }
   if (admin) {
+    const adminKeys: string[] = [
+      "dashboardStats",
+      "dashboardPieCharts",
+      "dashboardBarChart",
+      "dashboardLineChart",
+    ];
+    appCache.del(adminKeys);
   }
 };
 

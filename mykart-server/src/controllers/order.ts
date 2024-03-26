@@ -125,13 +125,14 @@ export const updateOrderStatus = async (
       order.status = "Delivered";
       break;
   }
+  const updatedOrder = await order.save();
 
   revalidatesCache({ product: false, order: true, admin: true });
 
   res.status(200).json({
     success: true,
     massage: "Order upadated successfully!",
-    data: order,
+    data: updatedOrder,
   });
 };
 
