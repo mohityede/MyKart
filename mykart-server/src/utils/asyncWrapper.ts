@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+
 import { ContollerType } from "../types/types.js";
 
 const asyncWrapper = (func: ContollerType) => {

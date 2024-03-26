@@ -1,14 +1,15 @@
+import { rm } from "fs";
 import { NextFunction, Request, Response } from "express";
-import ErrorHandler from "../utils/errorHandler.js";
+
 import Product from "../models/product.js";
+import ErrorHandler from "../utils/errorHandler.js";
+import revalidatesCache from "../utils/revalidateCache.js";
 import {
   NewProductRequestBody,
   SearchProductRequestQuery,
 } from "../types/interfaces.js";
-import { rm } from "fs";
-import { FindQuery } from "../types/types.js";
 import { appCache } from "../app.js";
-import revalidatesCache from "../utils/revalidateCache.js";
+import { FindQuery } from "../types/types.js";
 
 export const getAllProducts = async (
   req: Request,
@@ -112,7 +113,7 @@ export const createProduct = async (
     category: category.toLocaleLowerCase(),
   });
 
-  revalidatesCache({ product: true });
+  revalidatesCache({ product: true, admin: true });
 
   return res.status(201).json({
     success: true,
@@ -132,7 +133,7 @@ export const deleteProduct = async (
 
   await Product.findByIdAndDelete(id);
 
-  revalidatesCache({ product: true });
+  revalidatesCache({ product: true, admin: true });
 
   return res
     .status(200)
@@ -172,7 +173,7 @@ export const updateProduct = async (
 
   const updatedProduct = await product.save();
 
-  revalidatesCache({ product: true });
+  revalidatesCache({ product: true, admin: true });
 
   return res.status(200).json({
     success: true,

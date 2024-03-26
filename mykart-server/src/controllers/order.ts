@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { NewOrderRequestBody } from "../types/interfaces.js";
+
 import Order from "../models/order.js";
-import { reduceStock } from "../utils/features.js";
-import revalidatesCache from "../utils/revalidateCache.js";
 import ErrorHandler from "../utils/errorHandler.js";
+import revalidatesCache from "../utils/revalidateCache.js";
 import { appCache } from "../app.js";
+import { reduceStock } from "../utils/features.js";
+import { NewOrderRequestBody } from "../types/interfaces.js";
 
 export const getAllOrders = async (
   req: Request,

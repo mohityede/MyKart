@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
+
 import User from "../models/user.js";
-import { NewUserRequestBody } from "../types/interfaces.js";
 import ErrorHandler from "../utils/errorHandler.js";
+import revalidatesCache from "../utils/revalidateCache.js";
+import { NewUserRequestBody } from "../types/interfaces.js";
 
 export const getAllUsers = async (
   req: Request,
@@ -37,7 +39,7 @@ export const createUser = async (
       .json({ success: true, massage: `Welcome ${user.name}` });
 
   if (!name || !email || !photo || !gender || !dob)
-    return next(new ErrorHandler(400, "Please fill all fuild!"));
+    return next(new ErrorHandler(400, "Please fill all field!"));
 
   user = await User.create({
     _id,
@@ -47,9 +49,10 @@ export const createUser = async (
     gender,
     dob: new Date(dob),
   });
+  revalidatesCache({ admin: true });
   return res
     .status(201)
-    .json({ success: true, massage: `Welcome ${user.name}`, data: user });
+    .json({ success: true, message: `Welcome ${user.name}`, data: user });
 };
 
 export const deleteUser = async (
@@ -62,6 +65,7 @@ export const deleteUser = async (
   if (!user) return next(new ErrorHandler(400, "invalid id!"));
 
   await User.findByIdAndDelete(id);
+  revalidatesCache({ admin: true });
 
   return res
     .status(200)

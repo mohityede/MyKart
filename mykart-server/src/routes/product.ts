@@ -1,4 +1,7 @@
 import { Router } from "express";
+
+import isAdmin from "../middlewares/checkAdmin.js";
+import asyncWrapper from "../utils/asyncWrapper.js";
 import {
   createProduct,
   deleteProduct,
@@ -8,8 +11,6 @@ import {
   searchProduct,
   updateProduct,
 } from "../controllers/product.js";
-import asyncWrapper from "../utils/asyncWrapper.js";
-import isAdmin from "../middlewares/checkAdmin.js";
 import { singleFileUpload } from "../middlewares/multer.js";
 
 const router = Router();
@@ -26,7 +27,7 @@ router.get("/:id", asyncWrapper(getProduct));
 // create new product - POST /api/v1/product/new
 router.post(
   "/new",
-  // asyncWrapper(isAdmin),
+  asyncWrapper(isAdmin),
   singleFileUpload,
   asyncWrapper(createProduct)
 );

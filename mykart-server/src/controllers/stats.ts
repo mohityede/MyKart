@@ -1,15 +1,14 @@
 import { NextFunction, Request, Response } from "express";
-import { appCache } from "../app.js";
-import Product from "../models/product.js";
+
 import User from "../models/user.js";
 import Order from "../models/order.js";
+import Product from "../models/product.js";
 import {
   calculateGrowthPercentage,
   getCategoryWisePercent,
   getChartData,
 } from "../utils/features.js";
-import { stat } from "fs";
-import { MyDocument } from "../types/interfaces.js";
+import { appCache } from "../app.js";
 
 export const getDashboardStats = async (
   req: Request,
@@ -197,7 +196,7 @@ export const getPieChartStats = async (
 ) => {
   let charts;
   if (appCache.has("dashboardPieCharts"))
-    JSON.parse(appCache.get("dashboardPieCharts") as string);
+    charts = JSON.parse(appCache.get("dashboardPieCharts") as string);
   else {
     const allProductsPromise = Order.find({}).select([
       "total",

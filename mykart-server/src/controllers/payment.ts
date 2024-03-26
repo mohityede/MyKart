@@ -1,8 +1,8 @@
+import { stripe } from "../app.js";
 import { NextFunction, Request, Response } from "express";
+
 import Coupon from "../models/coupon.js";
 import ErrorHandler from "../utils/errorHandler.js";
-import { stripe } from "../app.js";
-import exp from "constants";
 
 export const getAllCoupons = async (
   req: Request,

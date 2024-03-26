@@ -1,6 +1,6 @@
 import Product from "../models/product.js";
-import { MyDocument } from "../types/interfaces.js";
 import { OrderItemType } from "../types/types.js";
+import { MyDocument } from "../types/interfaces.js";
 
 export const reduceStock = async (orderItems: OrderItemType[]) => {
   for (let i = 0; i < orderItems.length; i++) {

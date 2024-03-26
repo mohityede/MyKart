@@ -1,12 +1,13 @@
 import { Router } from "express";
+
+import asyncWrapper from "../utils/asyncWrapper.js";
+import isAdmin from "../middlewares/checkAdmin.js";
 import {
   createUser,
   deleteUser,
   getAllUsers,
   getUser,
 } from "../controllers/user.js";
-import asyncWrapper from "../utils/asyncWrapper.js";
-import isAdmin from "../middlewares/checkAdmin.js";
 
 const router = Router();
 

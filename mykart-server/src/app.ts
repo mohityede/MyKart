@@ -1,15 +1,16 @@
-import express from "express";
-import userRoutes from "./routes/user.js";
-import productRoutes from "./routes/product.js";
-import orderRoutes from "./routes/order.js";
-import paymentRoutes from "./routes/payment.js";
-import statsRoutes from "./routes/stats.js";
-import dotenv from "dotenv";
-import connectDB from "./utils/connectDB.js";
-import errorMiddleware from "./middlewares/error.js";
-import NodeCache from "node-cache";
 import morgan from "morgan";
 import Stripe from "stripe";
+import dotenv from "dotenv";
+import express from "express";
+import NodeCache from "node-cache";
+
+import connectDB from "./utils/connectDB.js";
+import errorMiddleware from "./middlewares/error.js";
+import userRoutes from "./routes/user.js";
+import statsRoutes from "./routes/stats.js";
+import orderRoutes from "./routes/order.js";
+import productRoutes from "./routes/product.js";
+import paymentRoutes from "./routes/payment.js";
 
 const app = express();
 
