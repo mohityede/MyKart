@@ -3,7 +3,7 @@ import { lazy, Suspense } from "react";
 
 import Loader from "./components/loader";
 import Header from "./components/header";
-
+import { Toaster } from "react-hot-toast";
 const Home = lazy(() => import("./pages/home"));
 const Cart = lazy(() => import("./pages/cart"));
 const Search = lazy(() => import("./pages/search"));
@@ -28,6 +28,7 @@ function App() {
           </Route>
         </Routes>
       </Suspense>
+      <Toaster position="top-center" />
     </BrowserRouter>
   );
 }
