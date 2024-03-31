@@ -1,18 +1,31 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // import { backendServer } from "../store";
-import { MassageResponse } from "../../types/api";
+import { GetUserResponse, MassageResponse } from "../../types/api";
 import { User } from "../../types/types";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-const backendServer = import.meta.env.VITE_BACKEND_SERVER;
+const backendUserUrl = `${import.meta.env.VITE_BACKEND_SERVER}/api/v1/user/`;
 
 export const userAPI = createApi({
   reducerPath: "userAPI",
-  baseQuery: fetchBaseQuery({ baseUrl: `${backendServer}/api/v1/user/` }),
+  baseQuery: fetchBaseQuery({ baseUrl: backendUserUrl }),
   endpoints: (builder) => ({
     login: builder.mutation<MassageResponse, User>({
       query: (user) => ({ url: "new", method: "POST", body: user }),
     }),
   }),
 });
+
+export const getUser = async (id: string) => {
+  try {
+    const { data }: { data: GetUserResponse } = await axios.get(
+      `${backendUserUrl}${id}`
+    );
+    return data;
+  } catch (error) {
+    toast.error("error while fetching user");
+  }
+};
 
 export const { useLoginMutation } = userAPI;

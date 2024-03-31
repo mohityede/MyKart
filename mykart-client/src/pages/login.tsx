@@ -24,6 +24,7 @@ function Login() {
         gender,
         dob: DOB,
         _id: user.uid,
+        role: "user",
       };
       const res = await login(inputData);
 

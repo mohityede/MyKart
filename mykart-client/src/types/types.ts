@@ -5,4 +5,5 @@ export type User = {
   photo: string;
   gender: string;
   dob: string;
+  role: string;
 };

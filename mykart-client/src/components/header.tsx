@@ -2,10 +2,9 @@ import { Link } from "react-router-dom";
 import logo from "../assets/MyKart-logo.png";
 import { CgProfile } from "react-icons/cg";
 import { useState } from "react";
+import { HeaderProps } from "../types/props";
 
-const user = { _id: "", role: "user" };
-
-function Header() {
+function Header({ user }: HeaderProps) {
   const [isDialog, setisDialog] = useState<boolean>(false);
 
   const logOutHandler = () => {
