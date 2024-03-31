@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import dotenv from "dotenv";
 import express from "express";
 import NodeCache from "node-cache";
+import cors from "cors";
 
 import connectDB from "./utils/connectDB.js";
 import errorMiddleware from "./middlewares/error.js";
@@ -16,6 +17,7 @@ const app = express();
 
 dotenv.config();
 connectDB();
+app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 export const appCache = new NodeCache();
