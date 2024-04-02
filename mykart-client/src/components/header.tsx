@@ -3,12 +3,21 @@ import logo from "../assets/MyKart-logo.png";
 import { CgProfile } from "react-icons/cg";
 import { useState } from "react";
 import { HeaderProps } from "../types/props";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import toast from "react-hot-toast";
 
 function Header({ user }: HeaderProps) {
   const [isDialog, setisDialog] = useState<boolean>(false);
 
-  const logOutHandler = () => {
-    setisDialog(false);
+  const logOutHandler = async () => {
+    try {
+      await signOut(auth);
+      toast.success("User Sign out successfully!");
+      setisDialog(false);
+    } catch (error) {
+      toast.error("Sign out failed!");
+    }
   };
 
   return (
@@ -25,11 +34,11 @@ function Header({ user }: HeaderProps) {
         <Link to={"/search"} onClick={() => setisDialog(false)}>
           SEARCH
         </Link>
+        <Link to={"/cart"} onClick={() => setisDialog(false)}>
+          CART
+        </Link>
         {user?._id ? (
           <>
-            <Link to={"/cart"} onClick={() => setisDialog(false)}>
-              CART
-            </Link>
             <button onClick={() => setisDialog((prev) => !prev)}>
               <CgProfile />
             </button>

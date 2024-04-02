@@ -11,6 +11,7 @@ import { getUser } from "./redux/api/userAPI";
 import { userExist, userNotExist } from "./redux/reducers/userReducer";
 import { User } from "./types/types";
 import { UserReducerInitialState } from "./types/reducers";
+import Protected from "./components/protected";
 
 const Home = lazy(() => import("./pages/home"));
 const Cart = lazy(() => import("./pages/cart"));
@@ -37,17 +38,26 @@ function App() {
       }
     });
   }, []);
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <BrowserRouter>
       <Header user={user} />
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/login" element={<Login />} />
-          {/* Logged in user routes */}
           <Route path="/cart" element={<Cart />} />
-          <Route>
+          <Route
+            path="/login"
+            element={
+              <Protected isAuthenticated={user ? false : true}>
+                <Login />
+              </Protected>
+            }
+          />
+          {/* Logged in user routes */}
+          <Route element={<Protected isAuthenticated={user ? true : false} />}>
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/orders" element={<Orders />} />
           </Route>
