@@ -1,16 +1,38 @@
 import { useState } from "react";
 import Card from "../components/card";
+import { useSearchProductsQuery } from "../redux/api/product";
+import Loader from "../components/loader";
+import toast from "react-hot-toast";
 
 function Search() {
   const [searchInput, setSearchInput] = useState("");
   const [sort, setSort] = useState("");
-  const [maxPrice, setMaxPrice] = useState(100000);
+  const [maxPrice, setMaxPrice] = useState(1000000);
   const [category, setCategory] = useState("");
   const [page, setPage] = useState(1);
 
-  const addToCartHandler = () => {};
-  const totalPages = 10;
+  const reqQuery = {
+    search: searchInput,
+    sort,
+    price: maxPrice,
+    category,
+    page,
+  };
+  console.log(reqQuery);
+  const { data, isLoading, isError, error } = useSearchProductsQuery({
+    search: searchInput,
+    sort,
+    price: maxPrice,
+    category,
+    page,
+  });
 
+  const filteredProducts = data?.data.filteredProductsOnly;
+  const totalPages: number = data?.data.totalPages as number;
+
+  const addToCartHandler = () => {};
+
+  if (isError) toast.error("Error while fetching products.");
   return (
     <div className="searchpage">
       <aside>
@@ -28,7 +50,7 @@ function Search() {
           <input
             type="range"
             min={100}
-            max={100000}
+            max={1000000}
             value={maxPrice}
             onChange={(e) => setMaxPrice(Number(e.target.value))}
           />
@@ -40,8 +62,13 @@ function Search() {
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">All</option>
-            <option value="electronics">Electronincs</option>
+            <option value="electronics">Electronics</option>
+            <option value="fashion">Fashion</option>
             <option value="accesories">Accesoories</option>
+            <option value="sports">Sports</option>
+            <option value="home">Home</option>
+            <option value="beuty">Beuty</option>
+            <option value="other">Other</option>
           </select>
         </div>
       </aside>
@@ -53,33 +80,48 @@ function Search() {
           placeholder="Product name..."
           onChange={(e) => setSearchInput(e.target.value)}
         />
-        <div className="productslist">
-          <Card
-            productId="9784"
-            name="camera"
-            photo="https://m.media-amazon.com/images/I/713xBPyXC-L._SL1500_.jpg"
-            price={420}
-            stock={1000}
-            handler={addToCartHandler}
-          />
-        </div>
-        <article>
-          <button
-            disabled={page == 1}
-            onClick={() => setPage((prev) => prev - 1)}
-          >
-            Prev
-          </button>
-          <span>
-            {page} of {totalPages}
-          </span>
-          <button
-            disabled={page == totalPages}
-            onClick={() => setPage((prev) => prev + 1)}
-          >
-            Next
-          </button>
-        </article>
+        {!isLoading ? (
+          <div className="productslist">
+            {filteredProducts && filteredProducts.length > 1 ? (
+              filteredProducts.map((i) => {
+                return (
+                  <Card
+                    key={i._id}
+                    productId={i._id}
+                    name={i.name}
+                    photo={i.photo}
+                    price={i.price}
+                    stock={i.stock}
+                    handler={addToCartHandler}
+                  />
+                );
+              })
+            ) : (
+              <div>No Product found...</div>
+            )}
+          </div>
+        ) : (
+          <Loader />
+        )}
+        {totalPages > 1 && (
+          <article>
+            <button
+              disabled={page == 1}
+              onClick={() => setPage((prev) => prev - 1)}
+            >
+              Prev
+            </button>
+            <span>
+              {page} of {totalPages}
+            </span>
+            <button
+              disabled={page == totalPages}
+              onClick={() => setPage((prev) => prev + 1)}
+            >
+              Next
+            </button>
+          </article>
+        )}
       </main>
     </div>
   );
