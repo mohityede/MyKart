@@ -16,3 +16,20 @@ export type Product = {
   stock: number;
   category: string;
 };
+
+export type ShippingInfo = {
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  pinCode: number;
+};
+
+export type CartItem = {
+  productId: string;
+  name: string;
+  photo: string;
+  price: number;
+  quantity: number;
+  stock: number;
+};

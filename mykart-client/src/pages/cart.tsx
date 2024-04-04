@@ -1,33 +1,34 @@
 import { useEffect, useState } from "react";
 import { BiSolidError } from "react-icons/bi";
 import CartItem from "../components/cartItem";
-import { Link } from "react-router-dom";
-
-const cartItems = [
-  {
-    productId: "9784",
-    name: "camera",
-    photo: "https://m.media-amazon.com/images/I/713xBPyXC-L._SL1500_.jpg",
-    price: 500,
-    quantity: 4,
-  },
-  {
-    productId: "9784",
-    name: "camera",
-    photo: "https://m.media-amazon.com/images/I/713xBPyXC-L._SL1500_.jpg",
-    price: 500,
-    quantity: 4,
-  },
-];
-const subTotal = 4000;
-const tax = Math.round(0.18 * subTotal);
-const shippingCharges = 200;
-const discount = 250;
-const total = subTotal + tax + shippingCharges - discount;
+import { Link, useFetcher } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { CartReducerInitialState } from "../types/reducers";
+import { CartItem as CartItemType } from "../types/types";
+import {
+  addToCart,
+  calculateTotal,
+  removeCartItem,
+} from "../redux/reducers/cartReducer";
+import toast from "react-hot-toast";
+import Loader from "../components/loader";
 
 function Cart() {
+  const {
+    cartItems,
+    loading,
+    subTotal,
+    total,
+    tax,
+    shippingCharges,
+    shippingInfo,
+    discount,
+  } = useSelector(
+    (state: { cartReducer: CartReducerInitialState }) => state.cartReducer
+  );
   const [couponCode, setCouponCode] = useState<string>("");
   const [isValidCoupon, setIsValidCoupon] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const timeOutID = setTimeout(() => {
@@ -39,13 +40,47 @@ function Cart() {
       clearTimeout(timeOutID);
     };
   }, [couponCode]);
+
+  const incrementCartItemQuantity = (cartItem: CartItemType) => {
+    if (cartItem.stock === cartItem.quantity) toast.error("Out of Stock");
+    dispatch(
+      addToCart({
+        ...cartItem,
+        quantity: Math.min(cartItem.stock, cartItem.quantity + 1),
+      })
+    );
+  };
+  const decrementCartItemQuantity = (cartItem: CartItemType) => {
+    dispatch(
+      addToCart({ ...cartItem, quantity: Math.max(1, cartItem.quantity - 1) })
+    );
+  };
+  const deleteCartItem = (id: string) => {
+    dispatch(removeCartItem(id));
+  };
+
+  useEffect(() => {
+    dispatch(calculateTotal());
+  }, [cartItems]);
   return (
     <div className="cart">
       <main>
-        {cartItems.length > 0 ? (
-          cartItems.map((item, ind) => <CartItem key={ind} cartItem={item} />)
+        {!loading ? (
+          cartItems.length > 0 ? (
+            cartItems.map((item, ind) => (
+              <CartItem
+                key={ind}
+                cartItem={item}
+                incrementCartItemQuantity={incrementCartItemQuantity}
+                decrementCartItemQuantity={decrementCartItemQuantity}
+                deleteCartItem={deleteCartItem}
+              />
+            ))
+          ) : (
+            <h1>No Items Added</h1>
+          )
         ) : (
-          <h1>No Items Added</h1>
+          <Loader />
         )}
       </main>
       <aside>

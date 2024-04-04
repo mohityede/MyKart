@@ -3,6 +3,9 @@ import Card from "../components/card";
 import { useSearchProductsQuery } from "../redux/api/product";
 import Loader from "../components/loader";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/reducers/cartReducer";
+import { CartItem } from "../types/types";
 
 function Search() {
   const [searchInput, setSearchInput] = useState("");
@@ -30,7 +33,12 @@ function Search() {
   const filteredProducts = data?.data.filteredProductsOnly;
   const totalPages: number = data?.data.totalPages as number;
 
-  const addToCartHandler = () => {};
+  const dispatch = useDispatch();
+  const addToCartHandler = (cartItem: CartItem) => {
+    if (cartItem.stock < 1) toast.error("Out of Stock");
+    dispatch(addToCart(cartItem));
+    toast.success("Product added to cart");
+  };
 
   if (isError) toast.error("Error while fetching products.");
   return (
@@ -82,7 +90,7 @@ function Search() {
         />
         {!isLoading ? (
           <div className="productslist">
-            {filteredProducts && filteredProducts.length > 1 ? (
+            {filteredProducts && filteredProducts.length >= 1 ? (
               filteredProducts.map((i) => {
                 return (
                   <Card

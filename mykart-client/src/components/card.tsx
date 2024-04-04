@@ -1,11 +1,4 @@
-type ProductProps = {
-  productId: string;
-  name: string;
-  photo: string;
-  price: number;
-  stock: number;
-  handler: () => void;
-};
+import { ProductProps } from "../types/props";
 
 function Card({ productId, name, photo, price, stock, handler }: ProductProps) {
   return (
@@ -14,7 +7,13 @@ function Card({ productId, name, photo, price, stock, handler }: ProductProps) {
       <p>{name}</p>
       <span>₹{price}</span>
       <div>
-        <button onClick={() => handler()}>add to cart</button>
+        <button
+          onClick={() =>
+            handler({ productId, name, photo, price, stock, quantity: 1 })
+          }
+        >
+          add to cart
+        </button>
       </div>
     </div>
   );
