@@ -76,12 +76,12 @@ export const searchProduct = async (
     .limit(pageLimit)
     .skip(productsToSkip);
 
-  const [products, filteredProductsOnly] = await Promise.all([
+  const [filteredProductsOnly, products] = await Promise.all([
     productsPromise,
     Product.find(findQuery),
   ]);
 
-  const totalPages = Math.ceil(filteredProductsOnly.length / pageLimit);
+  const totalPages = Math.ceil(products.length / pageLimit);
 
   return res.status(200).json({
     success: true,
