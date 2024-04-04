@@ -7,7 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-import { getUser } from "./redux/api/userAPI";
+import { getUser } from "./redux/api/user";
 import { userExist, userNotExist } from "./redux/reducers/userReducer";
 import { User } from "./types/types";
 import { UserReducerInitialState } from "./types/reducers";

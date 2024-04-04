@@ -10,7 +10,7 @@ type ProductProps = {
 function Card({ productId, name, photo, price, stock, handler }: ProductProps) {
   return (
     <div className="productcard">
-      <img src={`${photo}`} alt={name} />
+      <img src={`http://localhost:7000/${photo}`} alt={name} />
       <p>{name}</p>
       <span>₹{price}</span>
       <div>

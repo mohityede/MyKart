@@ -51,6 +51,7 @@
     @include square(calc(19rem - 3rem));
     object-fit: cover;
     margin: 0.5rem;
+    border-radius: 1rem;
   }
 
   span {

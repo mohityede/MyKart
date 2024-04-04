@@ -195,3 +195,34 @@ $color3: #5c8374;
     }
   }
 }
+
+.skeletonloader {
+  // display: flex;
+  // flex-direction: column;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+}
+
+@keyframes skeletoloading {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.skeletonbox {
+  height: 250px;
+  width: 100%;
+  background-color: rgb(190, 195, 210);
+  margin-bottom: 10px;
+  border-radius: 5px;
+  animation: skeletoloading 2.5s infinite;
+}

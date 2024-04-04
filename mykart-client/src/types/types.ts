@@ -7,3 +7,12 @@ export type User = {
   dob: string;
   role: string;
 };
+
+export type Product = {
+  _id: string;
+  name: string;
+  photo: string;
+  price: number;
+  stock: number;
+  category: string;
+};

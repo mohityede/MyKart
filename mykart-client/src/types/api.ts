@@ -1,4 +1,4 @@
-import { User } from "./types";
+import { Product, User } from "./types";
 
 export interface MassageResponse {
   success: boolean;
@@ -9,4 +9,9 @@ export interface MassageResponse {
 export interface GetUserResponse {
   success: boolean;
   data: User;
+}
+
+export interface GetProductsResponse {
+  success: boolean;
+  data: Product[];
 }
