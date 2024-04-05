@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema(
       country: { type: String, required: true },
       pinCode: { type: Number, required: true },
     },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: String, ref: "User", required: true },
     subTotal: { type: Number, required: true },
     shippingCharges: { type: Number, required: true, default: 0 },
     tax: { type: Number, required: true },

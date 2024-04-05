@@ -80,7 +80,7 @@ export const createOrder = async (
     !orderItems
   )
     return next(new ErrorHandler(400, "Please fill all required fields!"));
-
+  console.log(typeof user);
   const newOrder = await Order.create({
     shippingInfo,
     user,
