@@ -19,6 +19,7 @@ const Search = lazy(() => import("./pages/search"));
 const Shipping = lazy(() => import("./pages/shipping"));
 const Login = lazy(() => import("./pages/login"));
 const Orders = lazy(() => import("./pages/orders"));
+const PageNotFound = lazy(() => import("./pages/notFound"));
 
 function App() {
   const dispatch = useDispatch();
@@ -57,10 +58,18 @@ function App() {
             }
           />
           {/* Logged in user routes */}
-          <Route element={<Protected isAuthenticated={user ? true : false} />}>
+          <Route
+            element={
+              <Protected
+                isAuthenticated={user ? true : false}
+                redirect="/login"
+              />
+            }
+          >
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/orders" element={<Orders />} />
           </Route>
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
       <Toaster position="top-center" />

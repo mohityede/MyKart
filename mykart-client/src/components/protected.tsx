@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { ProtectedProps } from "../types/props";
+import toast from "react-hot-toast";
 
 function Protected({
   isAuthenticated,
@@ -8,8 +9,13 @@ function Protected({
   children,
   redirect = "/",
 }: ProtectedProps) {
-  if (!isAuthenticated) return <Navigate to={redirect} />;
-  if (isAdminRoute && !isAdmin) return <Navigate to={redirect} />;
+  if (!isAuthenticated) {
+    return <Navigate to={redirect} />;
+  }
+  if (isAuthenticated && isAdminRoute && !isAdmin) {
+    toast.error("You don't have admin access");
+    return <Navigate to={redirect} />;
+  }
   return children ? children : <Outlet />;
 }
 

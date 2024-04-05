@@ -1,7 +1,12 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import TableHOC from "../components/tableHOC";
 import { Link } from "react-router-dom";
 import { Column } from "react-table";
+import { useSelector } from "react-redux";
+import { UserReducerInitialState } from "../types/reducers";
+import { useMyOrdersQuery } from "../redux/api/order";
+import Loader from "../components/loader";
+import toast from "react-hot-toast";
 
 type DataType = {
   _id: string;
@@ -9,7 +14,7 @@ type DataType = {
   quantity: number;
   discount: number;
   status: ReactElement;
-  action: ReactElement;
+  // action: ReactElement;
 };
 
 const column: Column<DataType>[] = [
@@ -33,78 +38,20 @@ const column: Column<DataType>[] = [
     Header: "Status",
     accessor: "status",
   },
-  {
-    Header: "Action",
-    accessor: "action",
-  },
+  // {
+  //   Header: "Action",
+  //   accessor: "action",
+  // },
 ];
 function Orders() {
-  const [rows, setRows] = useState<DataType[]>([
-    {
-      _id: "1234",
-      amount: 2430,
-      quantity: 24,
-      discount: 500,
-      status: <span className="red">Processing</span>,
-      action: <Link to={`/order/1234`}>View</Link>,
-    },
-    {
-      _id: "1234",
-      amount: 2430,
-      quantity: 24,
-      discount: 500,
-      status: <span className="red">Processing</span>,
-      action: <Link to={`/order/1234`}>View</Link>,
-    },
-    {
-      _id: "1234",
-      amount: 2430,
-      quantity: 24,
-      discount: 500,
-      status: <span className="red">Processing</span>,
-      action: <Link to={`/order/1234`}>View</Link>,
-    },
-    {
-      _id: "1234",
-      amount: 2430,
-      quantity: 24,
-      discount: 500,
-      status: <span className="red">Processing</span>,
-      action: <Link to={`/order/1234`}>View</Link>,
-    },
-    {
-      _id: "1234",
-      amount: 2430,
-      quantity: 24,
-      discount: 500,
-      status: <span className="red">Processing</span>,
-      action: <Link to={`/order/1234`}>View</Link>,
-    },
-    {
-      _id: "1234",
-      amount: 2430,
-      quantity: 24,
-      discount: 500,
-      status: <span className="red">Processing</span>,
-      action: <Link to={`/order/1234`}>View</Link>,
-    },
-    {
-      _id: "1234",
-      amount: 2430,
-      quantity: 24,
-      discount: 500,
-      status: <span className="red">Processing</span>,
-      action: <Link to={`/order/1234`}>View</Link>,
-    },
-    {
-      _id: "1234",
-      amount: 2430,
-      quantity: 24,
-      discount: 500,
-      status: <span className="red">Processing</span>,
-      action: <Link to={`/order/1234`}>View</Link>,
-    },
-  ]);
+  const { user } = useSelector(
+    (state: { userReducer: UserReducerInitialState }) => state.userReducer
+  );
+  const { isLoading, data, isError, error } = useMyOrdersQuery(
+    user?._id as string
+  );
+
+  const [rows, setRows] = useState<DataType[]>([]);
   const Table = TableHOC<DataType>(
     column,
     rows,
@@ -112,10 +59,42 @@ function Orders() {
     "Orders",
     rows.length > 6
   )();
+
+  useEffect(() => {
+    if (data) {
+      console.log(data.data);
+      // setRows(data.data);
+      setRows(
+        data.data.map((i) => ({
+          _id: i._id,
+          amount: i.total,
+          discount: i.discount,
+          quantity: i.orderItems.length,
+          status: (
+            <span
+              className={
+                i.status === "processing"
+                  ? "red"
+                  : i.status === "shipped"
+                  ? "green"
+                  : i.status === "confirmed"
+                  ? "yellow"
+                  : "purple"
+              }
+            >
+              {i.status}
+            </span>
+          ),
+        }))
+      );
+    }
+  }, [data]);
+
+  if (isError) return toast.error("Error...");
   return (
     <div className="container">
       <h1>My Orders</h1>
-      {Table}
+      {isLoading ? <Loader /> : Table}
     </div>
   );
 }

@@ -49,12 +49,17 @@ export const cartReducer = createSlice({
       state.shippingCharges =
         state.subTotal > 1000 || state.subTotal === 0 ? 0 : 200;
       state.tax = Math.round(state.subTotal * 0.18);
-      state.total =
-        state.subTotal + state.shippingCharges + state.tax - state.discount;
+      state.total = Math.max(
+        0,
+        state.subTotal + state.shippingCharges + state.tax - state.discount
+      );
       state.loading = false;
+    },
+    applyCoupon: (state, action: PayloadAction<number>) => {
+      state.discount = action.payload;
     },
   },
 });
 
-export const { addToCart, removeCartItem, calculateTotal } =
+export const { addToCart, removeCartItem, calculateTotal, applyCoupon } =
   cartReducer.actions;

@@ -9,9 +9,11 @@ import {
   addToCart,
   calculateTotal,
   removeCartItem,
+  applyCoupon,
 } from "../redux/reducers/cartReducer";
 import toast from "react-hot-toast";
 import Loader from "../components/loader";
+import axios from "axios";
 
 function Cart() {
   const {
@@ -32,8 +34,22 @@ function Cart() {
 
   useEffect(() => {
     const timeOutID = setTimeout(() => {
-      if (Math.random() > 0.5) setIsValidCoupon(true);
-      else setIsValidCoupon(false);
+      const url = `http://localhost:7000/api/v1/payment/coupon?couponCode=${couponCode}`;
+      const { token, cancel } = axios.CancelToken.source();
+      axios
+        .get(url, { cancelToken: token })
+        .then((res) => {
+          setIsValidCoupon(true);
+          const amount: number = res.data.data.amount;
+          dispatch(applyCoupon(amount));
+          dispatch(calculateTotal());
+        })
+        .catch((err) => {
+          setIsValidCoupon(false);
+          dispatch(applyCoupon(0));
+          dispatch(calculateTotal());
+          cancel();
+        });
     }, 500);
 
     return () => {

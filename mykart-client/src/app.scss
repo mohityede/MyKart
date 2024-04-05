@@ -44,6 +44,9 @@ $color3: #5c8374;
   color: #74e291;
 }
 
+.yellow {
+  color: yellow;
+}
 .header {
   @include flex(row, space-between, stretch, 1.2rem);
   padding: 1rem;
@@ -225,4 +228,9 @@ $color3: #5c8374;
   margin-bottom: 10px;
   border-radius: 5px;
   animation: skeletoloading 2.5s infinite;
+}
+
+.notfound {
+  @include flex(column);
+  height: 80vh;
 }

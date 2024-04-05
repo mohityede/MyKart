@@ -1,9 +1,9 @@
-import { Product, User } from "./types";
+import { Order, OrderItem, Product, ShippingInfo, User } from "./types";
 
 export interface MassageResponse {
   success: boolean;
   massage: string;
-  data: User;
+  data: Object;
 }
 
 export interface GetUserResponse {
@@ -16,11 +16,6 @@ export interface GetProductsResponse {
   data: Product[];
 }
 
-interface SearchData {
-  products: Product[];
-  filteredProductsOnly: Product[];
-  totalPages: number;
-}
 export interface SearchProductResponse {
   success: boolean;
   data: {
@@ -36,4 +31,20 @@ export interface SearchProductRequest {
   price: number;
   category: string;
   page: number;
+}
+
+export interface NewOrderRequest {
+  shippingInfo: ShippingInfo;
+  user: string;
+  subTotal: number;
+  shippingCharges: number;
+  tax: number;
+  discount: number;
+  total: number;
+  orderItems: OrderItem[];
+}
+
+export interface GetMyOrders {
+  success: boolean;
+  data: Order[];
 }
