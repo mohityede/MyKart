@@ -1,4 +1,11 @@
-import { Order, OrderItem, Product, ShippingInfo, User } from "./types";
+import {
+  CartItem,
+  Order,
+  OrderItem,
+  Product,
+  ShippingInfo,
+  User,
+} from "./types";
 
 export interface MassageResponse {
   success: boolean;
@@ -41,7 +48,7 @@ export interface NewOrderRequest {
   tax: number;
   discount: number;
   total: number;
-  orderItems: OrderItem[];
+  orderItems: CartItem[];
 }
 
 export interface GetMyOrders {

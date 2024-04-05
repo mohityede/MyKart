@@ -1,5 +1,5 @@
 function Loader() {
-  return <>Loading...</>;
+  return <h1 className="container">Loading...</h1>;
 }
 
 export default Loader;
