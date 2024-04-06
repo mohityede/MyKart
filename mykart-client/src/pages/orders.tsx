@@ -47,9 +47,7 @@ function Orders() {
   const { user } = useSelector(
     (state: { userReducer: UserReducerInitialState }) => state.userReducer
   );
-  const { isLoading, data, isError, error } = useMyOrdersQuery(
-    user?._id as string
-  );
+  const { isLoading, data, isError } = useMyOrdersQuery(user?._id as string);
 
   const [rows, setRows] = useState<DataType[]>([]);
   const Table = TableHOC<DataType>(
