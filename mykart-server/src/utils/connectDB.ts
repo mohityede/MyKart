@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const connectDB = () => {
   const connectionString: string = process.env
-    .LOCAL_DB_CONNECTOIN_STRING as string;
+    .MONGODB_CONNECTION_STRING as string;
   mongoose
     .connect(connectionString, {
       dbName: "mykartDB",
