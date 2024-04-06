@@ -34,7 +34,9 @@ function Cart() {
 
   useEffect(() => {
     const timeOutID = setTimeout(() => {
-      const url = `http://localhost:7000/api/v1/payment/coupon?couponCode=${couponCode}`;
+      const url = `${
+        import.meta.env.VITE_BACKEND_SERVER
+      }/api/v1/payment/coupon?couponCode=${couponCode}`;
       const { token, cancel } = axios.CancelToken.source();
       axios
         .get(url, { cancelToken: token })

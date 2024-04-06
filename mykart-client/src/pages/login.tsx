@@ -7,11 +7,12 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase";
 import { MassageResponse } from "../types/api";
 import { useLoginMutation } from "../redux/api/user";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [gender, setGender] = useState<string>("");
   const [DOB, setDOB] = useState<string>("");
-
+  const navigate = useNavigate();
   const [login] = useLoginMutation();
 
   const loginHandler = async () => {
@@ -31,6 +32,7 @@ function Login() {
 
       if ("data" in res) {
         toast.success(res.data.massage);
+        navigate("/");
       } else {
         const err = res.error as FetchBaseQueryError;
         const errMsg = err.data as MassageResponse;

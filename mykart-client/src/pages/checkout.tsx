@@ -73,7 +73,7 @@ function CheckoutForm() {
       const res = await newOrder(orderData);
       dispatch(resetCart());
       if ("data" in res) {
-        toast.success(res.data.massage);
+        toast.success("Order created successfully");
         navigate("/orders");
       } else {
         toast.error("something went wrong after payment successd");
