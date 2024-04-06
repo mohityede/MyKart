@@ -47,7 +47,7 @@ export const getLatestProducts = async (
   let products;
   if (appCache.has("latestProducts")) products = appCache.get("latestProducts");
   else {
-    products = await Product.find({}).sort({ createdAt: -1 }).limit(10);
+    products = await Product.find({}).sort({ createdAt: -1 }).limit(4);
     if (!products) return next(new ErrorHandler(400, "invalid product id!"));
     appCache.set("latestProducts", products);
   }

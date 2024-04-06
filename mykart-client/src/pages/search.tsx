@@ -1,11 +1,12 @@
-import { useState } from "react";
-import Card from "../components/card";
-import { useSearchProductsQuery } from "../redux/api/product";
-import Loader from "../components/loader";
 import toast from "react-hot-toast";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../redux/reducers/cartReducer";
+
+import Card from "../components/card";
+import Loader from "../components/loader";
 import { CartItem } from "../types/types";
+import { addToCart } from "../redux/reducers/cartReducer";
+import { useSearchProductsQuery } from "../redux/api/product";
 
 function Search() {
   const [searchInput, setSearchInput] = useState("");
@@ -14,15 +15,7 @@ function Search() {
   const [category, setCategory] = useState("");
   const [page, setPage] = useState(1);
 
-  const reqQuery = {
-    search: searchInput,
-    sort,
-    price: maxPrice,
-    category,
-    page,
-  };
-  console.log(reqQuery);
-  const { data, isLoading, isError, error } = useSearchProductsQuery({
+  const { data, isLoading, isError } = useSearchProductsQuery({
     search: searchInput,
     sort,
     price: maxPrice,

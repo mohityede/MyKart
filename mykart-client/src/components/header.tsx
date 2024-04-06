@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
-import logo from "../assets/MyKart-logo.png";
-import { CgProfile } from "react-icons/cg";
-import { useState } from "react";
-import { HeaderProps } from "../types/props";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import { auth } from "../firebase";
+import { Link } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { CgProfile } from "react-icons/cg";
+import { HeaderProps } from "../types/props";
+
+import logo from "../assets/MyKart-logo.png";
 
 function Header({ user }: HeaderProps) {
   const [isDialog, setisDialog] = useState<boolean>(false);

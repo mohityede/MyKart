@@ -1,11 +1,12 @@
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { useState } from "react";
 import toast from "react-hot-toast";
+import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { auth } from "../firebase";
-import { useLoginMutation } from "../redux/api/user";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+import { auth } from "../firebase";
 import { MassageResponse } from "../types/api";
+import { useLoginMutation } from "../redux/api/user";
 
 function Login() {
   const [gender, setGender] = useState<string>("");

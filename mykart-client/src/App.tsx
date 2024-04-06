@@ -1,26 +1,26 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import { lazy, Suspense, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Loader from "./components/loader";
 import Header from "./components/header";
-import { Toaster } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
-import { onAuthStateChanged } from "firebase/auth";
+import Protected from "./components/protected";
 import { auth } from "./firebase";
+import { User } from "./types/types";
 import { getUser } from "./redux/api/user";
 import { userExist, userNotExist } from "./redux/reducers/userReducer";
-import { User } from "./types/types";
 import { UserReducerInitialState } from "./types/reducers";
-import Protected from "./components/protected";
 
 const Home = lazy(() => import("./pages/home"));
 const Cart = lazy(() => import("./pages/cart"));
-const Search = lazy(() => import("./pages/search"));
-const Shipping = lazy(() => import("./pages/shipping"));
 const Login = lazy(() => import("./pages/login"));
+const Search = lazy(() => import("./pages/search"));
 const Orders = lazy(() => import("./pages/orders"));
-const PageNotFound = lazy(() => import("./pages/notFound"));
 const Checkout = lazy(() => import("./pages/checkout"));
+const Shipping = lazy(() => import("./pages/shipping"));
+const PageNotFound = lazy(() => import("./pages/notFound"));
 
 function App() {
   const dispatch = useDispatch();
@@ -33,10 +33,8 @@ function App() {
       if (currUser) {
         const res = await getUser(currUser.uid);
         dispatch(userExist(res?.data as User));
-        console.log("logged In");
       } else {
         dispatch(userNotExist());
-        console.log("not logged in");
       }
     });
   }, []);

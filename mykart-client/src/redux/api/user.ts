@@ -1,9 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// import { backendServer } from "../store";
-import { GetUserResponse, MassageResponse } from "../../types/api";
-import { User } from "../../types/types";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+import { User } from "../../types/types";
+import { GetUserResponse, MassageResponse } from "../../types/api";
 
 const backendUserUrl = `${import.meta.env.VITE_BACKEND_SERVER}/api/v1/user/`;
 

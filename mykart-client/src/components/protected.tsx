@@ -1,6 +1,6 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { ProtectedProps } from "../types/props";
 import toast from "react-hot-toast";
+import { ProtectedProps } from "../types/props";
+import { Navigate, Outlet } from "react-router-dom";
 
 function Protected({
   isAuthenticated,

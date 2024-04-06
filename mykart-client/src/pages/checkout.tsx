@@ -1,22 +1,23 @@
+import toast from "react-hot-toast";
+import { FormEvent, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { useDispatch, useSelector } from "react-redux";
+import { StripeElements } from "@stripe/stripe-js/dist";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import {
   Elements,
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { FormEvent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+
+import { NewOrderRequest } from "../types/api";
+import { resetCart } from "../redux/reducers/cartReducer";
+import { useCreateOrderMutation } from "../redux/api/order";
 import {
   CartReducerInitialState,
   UserReducerInitialState,
 } from "../types/reducers";
-import { useCreateOrderMutation } from "../redux/api/order";
-import { NewOrderRequest } from "../types/api";
-import toast from "react-hot-toast";
-import { resetCart } from "../redux/reducers/cartReducer";
-import { StripeElements } from "@stripe/stripe-js/dist";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
@@ -62,7 +63,6 @@ function CheckoutForm() {
       confirmParams: { return_url: window.location.origin },
       redirect: "if_required",
     });
-    console.log("eror", error);
     if (error) {
       setIsProcessing(false);
       toast.error("Something went wrong!");

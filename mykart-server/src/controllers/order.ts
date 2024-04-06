@@ -69,18 +69,8 @@ export const createOrder = async (
     orderItems,
   } = req.body;
 
-  if (
-    !shippingInfo ||
-    !user ||
-    !subTotal ||
-    !shippingCharges ||
-    !tax ||
-    !discount ||
-    !total ||
-    !orderItems
-  )
+  if (!shippingInfo || !user || !subTotal || !tax || !total || !orderItems)
     return next(new ErrorHandler(400, "Please fill all required fields!"));
-  console.log(typeof user);
   const newOrder = await Order.create({
     shippingInfo,
     user,

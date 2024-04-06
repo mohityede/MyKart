@@ -1,12 +1,12 @@
-import { ReactElement, useEffect, useState } from "react";
-import TableHOC from "../components/tableHOC";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import { Column } from "react-table";
 import { useSelector } from "react-redux";
+import { ReactElement, useEffect, useState } from "react";
 import { UserReducerInitialState } from "../types/reducers";
-import { useMyOrdersQuery } from "../redux/api/order";
+
 import Loader from "../components/loader";
-import toast from "react-hot-toast";
+import TableHOC from "../components/tableHOC";
+import { useMyOrdersQuery } from "../redux/api/order";
 
 type DataType = {
   _id: string;
@@ -62,8 +62,6 @@ function Orders() {
 
   useEffect(() => {
     if (data) {
-      console.log(data.data);
-      // setRows(data.data);
       setRows(
         data.data.map((i) => ({
           _id: i._id,

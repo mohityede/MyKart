@@ -1,11 +1,12 @@
-import { FormEvent, useEffect, useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 import { BiArrowBack } from "react-icons/bi";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { FormEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { CartReducerInitialState } from "../types/reducers";
 import { saveShippingInfo } from "../redux/reducers/cartReducer";
-import toast from "react-hot-toast";
-import axios from "axios";
 
 function Shipping() {
   const dispatch = useDispatch();
@@ -42,7 +43,6 @@ function Shipping() {
       );
       navigate("/pay", { state: data.clientSecret });
     } catch (error) {
-      console.log(error);
       toast.error("Something went wrong");
     }
   };

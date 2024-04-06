@@ -1,19 +1,20 @@
+import axios from "axios";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BiSolidError } from "react-icons/bi";
-import CartItem from "../components/cartItem";
-import { Link, useFetcher } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { CartReducerInitialState } from "../types/reducers";
+
 import { CartItem as CartItemType } from "../types/types";
+import { CartReducerInitialState } from "../types/reducers";
 import {
   addToCart,
   calculateTotal,
   removeCartItem,
   applyCoupon,
 } from "../redux/reducers/cartReducer";
-import toast from "react-hot-toast";
 import Loader from "../components/loader";
-import axios from "axios";
+import CartItem from "../components/cartItem";
 
 function Cart() {
   const {
@@ -23,7 +24,6 @@ function Cart() {
     total,
     tax,
     shippingCharges,
-    shippingInfo,
     discount,
   } = useSelector(
     (state: { cartReducer: CartReducerInitialState }) => state.cartReducer

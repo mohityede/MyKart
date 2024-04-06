@@ -1,11 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { userAPI } from "./api/user";
-import { userReducer } from "./reducers/userReducer";
-import { productAPI } from "./api/product";
-import { cartReducer } from "./reducers/cartReducer";
-import { orderApi } from "./api/order";
 
-// export const backendServer = import.meta.env.VITE_BACKEND_SERVER;
+import { userAPI } from "./api/user";
+import { orderApi } from "./api/order";
+import { productAPI } from "./api/product";
+import { userReducer } from "./reducers/userReducer";
+import { cartReducer } from "./reducers/cartReducer";
 
 export const store = configureStore({
   reducer: {

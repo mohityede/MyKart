@@ -1,11 +1,4 @@
-import {
-  CartItem,
-  Order,
-  OrderItem,
-  Product,
-  ShippingInfo,
-  User,
-} from "./types";
+import { CartItem, Order, Product, ShippingInfo, User } from "./types";
 
 export interface MassageResponse {
   success: boolean;
