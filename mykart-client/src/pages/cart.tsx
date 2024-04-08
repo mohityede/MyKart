@@ -51,7 +51,8 @@ function Cart() {
           dispatch(applyCoupon(0));
           dispatch(calculateTotal());
           cancel();
-          toast.error(err);
+          // toast.error(err.message);
+          console.log(err.message);
         });
     }, 500);
 
