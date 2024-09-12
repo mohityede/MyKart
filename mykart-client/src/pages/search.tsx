@@ -11,7 +11,7 @@ import { useSearchProductsQuery } from "../redux/api/product";
 function Search() {
   const [searchInput, setSearchInput] = useState("");
   const [sort, setSort] = useState("");
-  const [maxPrice, setMaxPrice] = useState(1000000);
+  const [maxPrice, setMaxPrice] = useState(100000);
   const [category, setCategory] = useState("");
   const [page, setPage] = useState(1);
 

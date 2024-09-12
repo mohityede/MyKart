@@ -36,3 +36,11 @@ export type OrderItemType = {
   quantity: Number;
   productId: String;
 };
+
+export type ProductCategory= "electronics"
+      | "fashion"
+      | "accesories"
+      | "sports"
+      | "home"
+      | "beuty"
+      | "other";
