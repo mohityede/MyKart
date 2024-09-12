@@ -11,7 +11,8 @@ import {
   searchProduct,
   updateProduct,
 } from "../controllers/product.js";
-import { singleFileUpload } from "../middlewares/multer.js";
+// import { singleFileUpload } from "../middlewares/multer.js";
+import upload from "../middlewares/multer.js";
 
 const router = Router();
 
@@ -28,7 +29,7 @@ router.get("/:id", asyncWrapper(getProduct));
 router.post(
   "/new",
   asyncWrapper(isAdmin),
-  singleFileUpload,
+  upload,
   asyncWrapper(createProduct)
 );
 
@@ -36,7 +37,7 @@ router.post(
 router.put(
   "/:id",
   asyncWrapper(isAdmin),
-  singleFileUpload,
+  upload,
   asyncWrapper(updateProduct)
 );
 

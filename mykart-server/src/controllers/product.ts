@@ -1,4 +1,3 @@
-import { rm } from "fs";
 import { NextFunction, Request, Response } from "express";
 
 import Product from "../models/product.js";
@@ -9,7 +8,8 @@ import {
   SearchProductRequestQuery,
 } from "../types/interfaces.js";
 import { appCache } from "../app.js";
-import { FindQuery } from "../types/types.js";
+import { FindQuery, ProductCategory } from "../types/types.js";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 export const getAllProducts = async (
   req: Request,
@@ -97,18 +97,19 @@ export const createProduct = async (
   const { name, price, stock, category } = req.body;
   const photo = req.file;
   if (!name || !price || !stock || !category || !photo) {
-    if (photo) {
-      rm(photo.path, () => {
-        console.log("Deleted");
-      });
-    }
+    // if (photo) {
+    //   rm(photo.path, () => {
+    //     console.log("Deleted");
+    //   });
+    // }
     return next(new ErrorHandler(400, "Please fill all fuild!"));
   }
+  const cloudinary_img:any = await uploadToCloudinary(photo.buffer);
 
   const product = await Product.create({
     name,
     price,
-    photo: photo?.path,
+    photo: cloudinary_img?.secure_url,
     stock,
     category: category.toLocaleLowerCase(),
   });
@@ -151,25 +152,23 @@ export const updateProduct = async (
 
   const product = await Product.findById(id);
   if (!product) return next(new ErrorHandler(400, "invalid product!"));
-  if (photo) {
-    rm(product.photo, () => {
-      console.log("old photo Deleted");
-    });
-    product.photo = photo.path;
+  // if (photo) {
+  //   rm(product.photo, () => {
+  //     console.log("old photo Deleted");
+  //   });
+  //   product.photo = photo.path;
+  // }
+  if(photo){
+    const cloudinary_img:any = await uploadToCloudinary(photo?.buffer);
+    product.photo=cloudinary_img?.secure_url;
   }
+  
 
   if (name) product.name = name;
   if (price) product.price = price;
   if (stock) product.stock = stock;
   if (category)
-    product.category = category.toLocaleLowerCase() as
-      | "electronics"
-      | "fashion"
-      | "accesories"
-      | "sports"
-      | "home"
-      | "beuty"
-      | "other";
+    product.category = category.toLocaleLowerCase() as ProductCategory;
 
   const updatedProduct = await product.save();
 
