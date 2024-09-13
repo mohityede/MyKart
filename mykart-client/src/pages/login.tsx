@@ -16,6 +16,10 @@ function Login() {
   const [login] = useLoginMutation();
 
   const loginHandler = async () => {
+    if(DOB==="" || gender===""){
+      toast.error("Please fill all required field");
+      return;
+    }
     try {
       const provider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(auth, provider);
@@ -60,11 +64,11 @@ function Login() {
           <input
             type="date"
             value={DOB}
+            max={"2010-01-01"}
             onChange={(e) => setDOB(e.target.value)}
           />
         </div>
         <div>
-          <p>Already have account</p>
           <button onClick={loginHandler}>
             <FcGoogle />
             <span>Sign in With Google</span>
